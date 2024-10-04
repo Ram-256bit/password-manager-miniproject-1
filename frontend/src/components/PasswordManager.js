@@ -1,9 +1,8 @@
 // PasswordManager.js
- import axios from 'axios';
 import { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios'; // Ensure Axios is imported
 import './index.css';
-//import './index_passwordManager.css'
 import PasswordItem from './PasswordItem'; // Adjust path if necessary
 
 class PasswordManager extends Component {
@@ -13,7 +12,6 @@ class PasswordManager extends Component {
     inputName: '',
     inputPassword: '',
     searchInput: '',
-    showPassword: false,
   };
 
   deletePasswordRecord = (id) => {
@@ -44,14 +42,10 @@ class PasswordManager extends Component {
     this.setState({ searchInput: e.target.value });
   };
 
-  onCheckChange = () => {
-    this.setState(prevState => ({ showPassword: !prevState.showPassword }));
-  };
-
   addPasswordRecord = async (e) => {
     e.preventDefault();
     const { inputUrl, inputName, inputPassword } = this.state;
-    
+
     const newRecord = { url: inputUrl, name: inputName, password: inputPassword };
     
     // Send POST request to backend API to add new password record
@@ -66,7 +60,6 @@ class PasswordManager extends Component {
   };
 
   render() {
-    const { showPassword } = this.state;
     const searchResults = this.getSearchRecords();
 
     return (
@@ -75,12 +68,16 @@ class PasswordManager extends Component {
         <form onSubmit={this.addPasswordRecord}>
           <input type="text" placeholder="Website" value={this.state.inputUrl} onChange={this.onInputUrlChange} />
           <input type="text" placeholder="Username" value={this.state.inputName} onChange={this.onInputNameChange} />
-          <input type={showPassword ? 'text' : 'password'} placeholder="Password" value={this.state.inputPassword} onChange={this.onInputPasswordChange} />
+          <input type="password" placeholder="Password" value={this.state.inputPassword} onChange={this.onInputPasswordChange} />
           <button type="submit">Add</button>
         </form>
         <ul>
           {searchResults.map(record => (
-            <PasswordItem key={record.id} record={record} deletePasswordRecord={this.deletePasswordRecord} showPassword={showPassword} />
+            <PasswordItem 
+              key={record.id} 
+              record={record} 
+              deletePasswordRecord={this.deletePasswordRecord} 
+            />
           ))}
         </ul>
       </div>

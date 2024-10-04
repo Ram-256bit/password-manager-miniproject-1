@@ -1,5 +1,51 @@
 /* index.css */
 
+/* index.css */
+
+/* Add this to your existing CSS */
+
+.password-container {
+  display: flex;
+  align-items: center;
+}
+
+.password-text {
+  margin-right: 10px; /* Space between password text and buttons */
+}
+
+.copy-btn,
+.view-btn {
+  margin-left: 5px; /* Space between buttons */
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.copy-btn:hover,
+.view-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+/* index.css */
+
+/* Existing styles... */
+
+.delete-btn {
+    background: #ff4d4d; /* Change background color for visibility */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    padding: 5px 10px; /* Padding for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+
+
 .app-container {
   font-family: Arial, sans-serif;
   max-width: 800px;
@@ -63,13 +109,6 @@ ul {
     flex-direction: column; 
     flex-grow:1; 
 }
-
-.delete-btn {
-    background:none; 
-    border:none; 
-    cursor:pointer; 
-}
-
 /* Styles for the circle avatar */
 .circle {
     width:40px; 
