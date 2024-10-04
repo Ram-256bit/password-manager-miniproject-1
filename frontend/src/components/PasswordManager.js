@@ -14,6 +14,21 @@ class PasswordManager extends Component {
     searchInput: '',
   };
 
+  componentDidMount() {
+    // Load password records from local storage when the component mounts
+    const storedRecords = JSON.parse(localStorage.getItem('passwordRecords'));
+    if (storedRecords) {
+      this.setState({ passwordRecords: storedRecords });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Save password records to local storage whenever they change
+    if (prevState.passwordRecords !== this.state.passwordRecords) {
+      localStorage.setItem('passwordRecords', JSON.stringify(this.state.passwordRecords));
+    }
+  }
+
   deletePasswordRecord = (id) => {
     const filteredRecords = this.state.passwordRecords.filter(record => record.id !== id);
     this.setState({ passwordRecords: filteredRecords });
@@ -54,13 +69,13 @@ class PasswordManager extends Component {
     e.preventDefault();
     const { inputUrl, inputName, inputPassword } = this.state;
 
-    const newRecord = { url: inputUrl, name: inputName, password: inputPassword };
-
+    const newRecord = { id: uuidv4(), url: inputUrl, name: inputName, password: inputPassword, showPassword: false };
+    
     // Send POST request to backend API to add new password record
     await axios.post('http://localhost:5000/api/passwords', newRecord);
 
     this.setState(prevState => ({
-      passwordRecords: [...prevState.passwordRecords, { id: uuidv4(), ...newRecord, showPassword: false }],
+      passwordRecords: [...prevState.passwordRecords, newRecord],
       inputUrl: '',
       inputName: '',
       inputPassword: '',
@@ -81,10 +96,10 @@ class PasswordManager extends Component {
         </form>
         <ul>
           {searchResults.map(record => (
-            <PasswordItem
-              key={record.id}
-              record={{ ...record }}
-              deletePasswordRecord={this.deletePasswordRecord}
+            <PasswordItem 
+              key={record.id} 
+              record={record} 
+              deletePasswordRecord={this.deletePasswordRecord} 
               toggleShowPassword={() => this.toggleShowPassword(record.id)} // Pass down toggle function
             />
           ))}
