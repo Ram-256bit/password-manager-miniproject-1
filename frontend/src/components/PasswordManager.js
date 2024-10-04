@@ -1,9 +1,9 @@
 // PasswordManager.js
 import { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios'; // Ensure Axios is imported
+import axios from 'axios';
 import './index.css';
-import PasswordItem from './PasswordItem'; // Adjust path if necessary
+import PasswordItem from './PasswordItem';
 
 class PasswordManager extends Component {
   state = {
@@ -17,6 +17,14 @@ class PasswordManager extends Component {
   deletePasswordRecord = (id) => {
     const filteredRecords = this.state.passwordRecords.filter(record => record.id !== id);
     this.setState({ passwordRecords: filteredRecords });
+  };
+
+  toggleShowPassword = (id) => {
+    this.setState(prevState => ({
+      passwordRecords: prevState.passwordRecords.map(record =>
+        record.id === id ? { ...record, showPassword: !record.showPassword } : record
+      )
+    }));
   };
 
   getSearchRecords = () => {
@@ -47,12 +55,12 @@ class PasswordManager extends Component {
     const { inputUrl, inputName, inputPassword } = this.state;
 
     const newRecord = { url: inputUrl, name: inputName, password: inputPassword };
-    
+
     // Send POST request to backend API to add new password record
     await axios.post('http://localhost:5000/api/passwords', newRecord);
 
     this.setState(prevState => ({
-      passwordRecords: [...prevState.passwordRecords, { id: uuidv4(), ...newRecord }],
+      passwordRecords: [...prevState.passwordRecords, { id: uuidv4(), ...newRecord, showPassword: false }],
       inputUrl: '',
       inputName: '',
       inputPassword: '',
@@ -73,10 +81,11 @@ class PasswordManager extends Component {
         </form>
         <ul>
           {searchResults.map(record => (
-            <PasswordItem 
-              key={record.id} 
-              record={record} 
-              deletePasswordRecord={this.deletePasswordRecord} 
+            <PasswordItem
+              key={record.id}
+              record={{ ...record }}
+              deletePasswordRecord={this.deletePasswordRecord}
+              toggleShowPassword={() => this.toggleShowPassword(record.id)} // Pass down toggle function
             />
           ))}
         </ul>

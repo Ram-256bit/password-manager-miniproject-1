@@ -18,16 +18,48 @@
 //};
 //
 //export default PasswordItem;
+//
+//// PasswordItem.js
+//import './index.css';
+//
+//const PasswordItem = ({ record, deletePasswordRecord, showPassword }) => {
+//  const { id, url, name, password } = record;
+//
+//  const handleCopy = () => {
+//    navigator.clipboard.writeText(password);
+//    alert('Password copied to clipboard!'); // Optional: Alert user that password is copied
+//  };
+//
+//  return (
+//    <li className="password-item">
+//      <div>
+//        <p>{url}</p>
+//        <p>{name}</p>
+//        <div className="password-container">
+//          <p className="password-text">{showPassword ? password : '******'}</p>
+//          <button onClick={handleCopy} className="copy-btn">Copy</button>
+//          <button onClick={deletePasswordRecord.bind(null, id)} className="view-btn">
+//            {showPassword ? 'Hide' : 'View'}
+//          </button>
+//        </div>
+//      </div>
+//      <button onClick={() => deletePasswordRecord(id)} className="delete-btn">Delete</button>
+//    </li>
+//  );
+//};
+//
+//export default PasswordItem;
+
 
 // PasswordItem.js
 import './index.css';
 
-const PasswordItem = ({ record, deletePasswordRecord, showPassword }) => {
-  const { id, url, name, password } = record;
+const PasswordItem = ({ record, deletePasswordRecord, toggleShowPassword }) => {
+  const { id, url, name, password, showPassword } = record;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(password);
-    alert('Password copied to clipboard!'); // Optional: Alert user that password is copied
+    alert('Password copied to clipboard!');
   };
 
   return (
@@ -38,12 +70,14 @@ const PasswordItem = ({ record, deletePasswordRecord, showPassword }) => {
         <div className="password-container">
           <p className="password-text">{showPassword ? password : '******'}</p>
           <button onClick={handleCopy} className="copy-btn">Copy</button>
-          <button onClick={deletePasswordRecord.bind(null, id)} className="view-btn">
+          {/* Toggle button for showing/hiding password */}
+          <button onClick={toggleShowPassword} className="view-btn">
             {showPassword ? 'Hide' : 'View'}
           </button>
+          {/* Delete button for removing the item */}
+          <button onClick={() => deletePasswordRecord(id)} className="delete-btn">Delete</button>
         </div>
       </div>
-      <button onClick={() => deletePasswordRecord(id)} className="delete-btn">Delete</button>
     </li>
   );
 };
