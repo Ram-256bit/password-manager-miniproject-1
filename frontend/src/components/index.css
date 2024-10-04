@@ -1,0 +1,107 @@
+/* index.css */
+
+.app-container {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.password-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.password-item:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+.details-container {
+    display: flex; 
+    flex-direction: column; 
+    flex-grow:1; 
+}
+
+.delete-btn {
+    background:none; 
+    border:none; 
+    cursor:pointer; 
+}
+
+/* Styles for the circle avatar */
+.circle {
+    width:40px; 
+    height:40px; 
+    border-radius:50%; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    color:white; 
+    font-weight:bold; 
+}
+
+/* Styles for showing password stars */
+.stars-icon {
+    width:20px; 
+    height:auto; 
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .app-container {
+        padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        font-size:14px; 
+        padding:8px; 
+    }
+
+    button {
+        font-size:14px; 
+        padding:8px; 
+    }
+}
